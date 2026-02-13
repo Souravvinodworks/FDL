@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Darshana</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
+            font-family: 'Georgia', serif;
+            overflow: hidden;
+            color: white;
+            text-align: center;
+        }
+
+        /* Floating Landmarks */
+        .icon {
+            position: absolute;
+            font-size: 2.5rem;
+            bottom: -50px;
+            opacity: 0.3;
+            animation: rise 12s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes rise {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.5; }
+            90% { opacity: 0.5; }
+            100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Falling Roses */
+        .rose {
+            position: absolute;
+            top: -50px;
+            font-size: 2rem;
+            z-index: 100;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            to { transform: translateY(110vh) rotate(360deg); }
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+            padding: 20px;
+        }
+
+        .heart {
+            width: 80px;
+            height: 80px;
+            background-color: #d63031;
+            transform: rotate(-45deg);
+            animation: beat 0.9s infinite alternate;
+            margin: 0 auto 50px;
+            box-shadow: 0 0 30px rgba(214, 48, 49, 0.5);
+        }
+
+        .heart::before, .heart::after {
+            content: "";
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background-color: #d63031;
+            border-radius: 50%;
+        }
+
+        .heart::before { top: -40px; left: 0; }
+        .heart::after { left: 40px; top: 0; }
+
+        @keyframes beat {
+            to { transform: scale(1.2) rotate(-45deg); }
+        }
+
+        h1 { font-size: 2.5rem; margin-bottom: 10px; }
+        .valentine-ques { font-size: 1.8rem; margin: 20px 0; font-style: italic; }
+
+        .btn-group {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.3s;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn-yes { background: #fff; color: #ff758c; }
+        .btn-yes-more { background: #d63031; color: white; }
+
+        button:hover { transform: scale(1.1); }
+
+        /* Success Message State */
+        .hidden { display: none; }
+        .congrats-text { font-size: 2rem; line-height: 1.5; }
+    </style>
+</head>
+<body>
+
+    <div id="bg-icons"></div>
+
+    <div class="container" id="main-content">
+        <div class="heart"></div>
+        <h1>Happy Valentine’s Day, Darshana</h1>
+        <p>You’re beautiful and the love of my life.</p>
+        <div class="valentine-ques">"Will you be my valentine forever?"</div>
+        
+        <div class="btn-group">
+            <button class="btn-yes" onclick="celebrate()">1. YES</button>
+            <button class="btn-yes-more" onclick="celebrate()">2. Definitely YESSS!</button>
+        </div>
+    </div>
+
+    <div class="container hidden" id="success-content">
+        <div class="heart"></div>
+        <div class="congrats-text">
+            Congratulations to a lifetime of happiness and sorrow<br>
+            <strong>together</strong>.
+        </div>
+    </div>
+
+    <script>
+        // Background Landmarks (UK & Dubai)
+        const landmarks = ['🏰', '🎡', '🏙️', '⛵', '💂', '🐪', '✨'];
+        const iconContainer = document.getElementById('bg-icons');
+
+        function createIcon() {
+            const el = document.createElement('div');
+            el.className = 'icon';
+            el.innerText = landmarks[Math.floor(Math.random() * landmarks.length)];
+            el.style.left = Math.random() * 100 + 'vw';
+            el.style.animationDuration = (Math.random() * 5 + 7) + 's';
+            iconContainer.appendChild(el);
+            setTimeout(() => el.remove(), 12000);
+        }
+        setInterval(createIcon, 800);
+
+        // Celebration Function
+        function celebrate() {
+            document.getElementById('main-content').classList.add('hidden');
+            document.getElementById('success-content').classList.remove('hidden');
+            
+            // Start Rose Rain
+            setInterval(createRose, 150);
+        }
+
+        function createRose() {
+            const rose = document.createElement('div');
+            rose.className = 'rose';
+            rose.innerText = '🌹';
+            rose.style.left = Math.random() * 100 + 'vw';
+            rose.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            document.body.appendChild(rose);
+            setTimeout(() => rose.remove(), 5000);
+        }
+    </script>
+</body>
+</html>
